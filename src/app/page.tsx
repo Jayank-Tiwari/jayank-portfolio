@@ -185,7 +185,7 @@ export default function HomePage() {
         /* Progress bar styles */
         .progress-bar-container {
           position: fixed;
-          top: 4rem;
+          top: 3.4rem;
           left: 0;
           right: 0;
           height: 4px;
