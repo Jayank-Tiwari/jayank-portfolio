@@ -1,0 +1,161 @@
+@import "tailwindcss";
+
+/* Smooth scrolling behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Professional color scheme using CSS variables */
+:root {
+  --color-primary: #3b82f6; /* Professional blue */
+  --color-primary-dark: #2563eb;
+  --color-primary-light: #60a5fa;
+  --color-accent: #8b5cf6; /* Purple accent */
+  --color-accent-dark: #7c3aed;
+  --color-success: #10b981; /* Green for success states */
+  --color-background: #0a0f1e; /* Deep professional dark */
+  --color-surface: #111827;
+  --color-surface-light: #1f2937;
+}
+
+/* Performance-optimized animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideRight {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-out;
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.6s ease-out 0.3s both;
+}
+
+.animate-slideRight {
+  animation: slideRight 0.8s ease-out 0.2s both;
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(59, 130, 246, 0.1),
+    transparent
+  );
+  background-size: 1000px 100%;
+  animation: shimmer 3s infinite;
+}
+
+/* Smooth scrolling for all browsers */
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+p {
+  @apply text-justify;
+}
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  /* Enforce the new dark background */
+  @apply bg-zinc-950;
+  /* Ensure a plain CSS background color in case Tailwind classes aren't applied */
+  background-color: #0f1720;
+  /* This is the key to the no-scroll layout */
+  overflow: hidden;
+}
+
+/* Ensure Next.js root and main areas also have the same background color */
+#__next,
+main {
+  background-color: #0f1720;
+}
+
+/* Responsive font size scaling - fluid typography */
+@media (max-width: 640px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  html {
+    font-size: 15px;
+  }
+}
+
+@media (min-width: 1025px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+/* Prevent horizontal overflow on mobile */
+* {
+  box-sizing: border-box;
+}
+
+/* Improve touch targets on mobile */
+@media (max-width: 768px) {
+  button,
+  a,
+  input,
+  textarea,
+  select {
+    min-height: 44px;
+  }
+}
+
+/* Optimize images for responsive */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Safe area for notched devices (iPhone X, etc.) */
+@supports (padding: max(0px)) {
+  body {
+    padding-left: max(0px, env(safe-area-inset-left));
+    padding-right: max(0px, env(safe-area-inset-right));
+  }
+}

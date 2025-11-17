@@ -1,0 +1,7 @@
+{
+    "vscode-edge-devtools.browserFlavor": "Dev",
+    "gitlens.hovers.annotations.over": "line",
+    "gitlens.changes.toggleMode": "window",
+    "python-envs.defaultEnvManager": "ms-python.python:system",
+    "python-envs.pythonProjects": []
+}

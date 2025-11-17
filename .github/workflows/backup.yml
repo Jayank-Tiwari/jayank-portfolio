@@ -1,0 +1,59 @@
+name: Create Repository Backup
+
+# This workflow creates automated backups of the repository
+# It can be run manually or scheduled to run periodically
+
+on:
+  workflow_dispatch: # Allows manual trigger
+  schedule:
+    # Run weekly on Sunday at 00:00 UTC (optional - uncomment to enable)
+    # - cron: '0 0 * * 0'
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: read
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch all history for complete backup
+      
+      - name: Set up backup environment
+        run: |
+          TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
+          echo "TIMESTAMP=$TIMESTAMP" >> $GITHUB_ENV
+          echo "BACKUP_NAME=jayank-portfolio_backup_${TIMESTAMP}" >> $GITHUB_ENV
+      
+      - name: Create backup archive
+        run: |
+          cd ..
+          tar -czf "${BACKUP_NAME}.tar.gz" \
+            --exclude='node_modules' \
+            --exclude='.next' \
+            --exclude='out' \
+            --exclude='dist' \
+            --exclude='build' \
+            --exclude='.cache' \
+            --exclude='*.log' \
+            jayank-portfolio
+      
+      - name: Upload backup as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.BACKUP_NAME }}
+          path: ../${{ env.BACKUP_NAME }}.tar.gz
+          retention-days: 90 # Keep backups for 90 days
+      
+      - name: Backup summary
+        run: |
+          BACKUP_SIZE=$(du -h ../${BACKUP_NAME}.tar.gz | cut -f1)
+          echo "### Backup Created Successfully! ✓" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Backup Name:** ${BACKUP_NAME}.tar.gz" >> $GITHUB_STEP_SUMMARY
+          echo "- **Size:** ${BACKUP_SIZE}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Retention:** 90 days" >> $GITHUB_STEP_SUMMARY
+          echo "- **Download:** Available in workflow artifacts" >> $GITHUB_STEP_SUMMARY
